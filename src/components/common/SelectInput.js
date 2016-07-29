@@ -11,7 +11,7 @@ const SelectInput = ({name, onChange, defaultOption, value, error, options}) => 
           className="form-control">
           <option value="">Select Lane</option>
           <option value="todo">ToDo</option>
-          <option value="inQA">In QA</option>
+          <option value="inqa">In QA</option>
           <option value="complete">Complete</option>
         </select>
         {error && <div className="alert alert-danger">{error}</div>}

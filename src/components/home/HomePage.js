@@ -16,7 +16,7 @@ class HomePage extends React.Component {
      adding: false
    };
 
-   this.lane=['Todo','In QA', 'Complete' ];
+   this.lane=['Todo','InQA', 'Complete' ];
    this.onTitleChange =this.onTitleChange.bind(this);
    this.onLaneChange = this.onLaneChange.bind(this);
    this.onClickSave = this.onClickSave.bind(this);
@@ -39,12 +39,7 @@ class HomePage extends React.Component {
     const task = this.state.task;
     task.id = task.id +1;
     this.setState({task: task });
-    for(var i = 0; i < this.lane.length; i++) {
-        if(this.lane[i] === task.laneTitle) {
-          console.log(task.laneTitle);
-            return task.laneTitle;
-        }
-    }
+
     this.props.actions.createTask(this.state.task);
   }
 
@@ -54,6 +49,18 @@ class HomePage extends React.Component {
  //     titleName={task.title}
  //     ></TaskListRowItem>
  //   }
+
+ findTasks (tasks, lane) {
+   console.log(tasks);
+   console.log(lane);
+   let temp = [];
+   tasks.map((task) => {
+     if (task.laneTitle === lane.toLowerCase()) {
+       temp.push(task)
+     }
+   })
+   return temp;
+ }
 
  render() {
    const {tasks} = this.props;
@@ -70,7 +77,7 @@ class HomePage extends React.Component {
        adding={this.state.adding}/>
 
        {this.lane.map(lane =>
-        <div className="col-md-4"><TaskListRow onChange={this.onLaneChange} tasks={this.props.tasks} lane={lane}/></div>
+        <div className="col-md-4"><TaskListRow onChange={this.onLaneChange} tasks={this.findTasks(this.props.tasks, lane)} lane={lane}/></div>
       )}
       </div>
    );
@@ -83,6 +90,7 @@ HomePage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  console.log(state)
  return{
    tasks: state.tasks
  };
